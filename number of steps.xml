@@ -1,0 +1,6 @@
+<uses-permission android:name="android.permission.BODY_SENSORS" />
+<TextView
+    android:id="@+id/stepCountTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Step Count: 0" />
