@@ -1,62 +1,51 @@
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
 
-public class StepCounterActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
-    private SensorManager sensorManager;
-    private Sensor stepCounterSensor;
-    private TextView stepCountTextView;
-    private int stepsCount = 0;
+    private EditText editWeight;
+    private Button btnCalculate;
+    private TextView tvResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_step_counter);
+        setContentView(R.layout.activity_main);
 
-        stepCountTextView = findViewById(R.id.stepCountTextView);
+        editWeight = findViewById(R.id.editWeight);
+        btnCalculate = findViewById(R.id.btnCalculate);
+        tvResult = findViewById(R.id.tvResult);
 
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        stepCounterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-
-        if (stepCounterSensor != null) {
-            sensorManager.registerListener(stepSensorListener, stepCounterSensor, SensorManager.SENSOR_DELAY_NORMAL);
-        } else {
-            stepCountTextView.setText("Step Counter Sensor Not Available");
-        }
-    }
-
-    private SensorEventListener stepSensorListener = new SensorEventListener() {
-        @Override
-        public void onSensorChanged(SensorEvent event) {
-            if (event.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
-                stepsCount = (int) event.values[0];
-                stepCountTextView.setText("Step Count: " + stepsCount);
+        btnCalculate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                calculateSteps();
             }
-        }
-
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        }
-    };
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (stepCounterSensor != null) {
-            sensorManager.registerListener(stepSensorListener, stepCounterSensor, SensorManager.SENSOR_DELAY_NORMAL);
-        }
+        });
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (stepCounterSensor != null) {
-            sensorManager.unregisterListener(stepSensorListener);
+    private void calculateSteps() {
+        String weightStr = editWeight.getText().toString();
+        if (weightStr.isEmpty()) {
+            tvResult.setText("Please enter your weight.");
+            return;
         }
+
+        double weight = Double.parseDouble(weightStr);
+        int minSteps, maxSteps;
+
+        if (weight < 80) {
+            minSteps = 8000;
+            maxSteps = 10000;
+        } else {
+            minSteps = 10000;
+            maxSteps = 12000;
+        }
+
+        tvResult.setText("Recommended Steps Range: " + minSteps + " - " + maxSteps + " steps per day");
     }
 }
