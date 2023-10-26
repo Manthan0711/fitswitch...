@@ -1,6 +1,38 @@
-<uses-permission android:name="android.permission.BODY_SENSORS" />
-<TextView
-    android:id="@+id/stepCountTextView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Step Count: 0" />
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/weightTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Weight: "
+        android:textSize="16sp"
+        android:textStyle="bold"
+    />
+
+    <TextView
+        android:id="@+id/minStepsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Minimum Steps: "
+        android:textSize="16sp"
+        android:textStyle="bold"
+    />
+
+    <TextView
+        android:id="@+id/maxStepsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Maximum Steps: "
+        android:textSize="16sp"
+        android:textStyle="bold"
+    />
+
+</LinearLayout>
